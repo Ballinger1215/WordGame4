@@ -1,0 +1,27 @@
+package wordgame3;
+
+/**
+ *
+ * @author Mark
+ */
+public class Game {
+    
+    String score;
+    String[] pNames;
+    
+    public Game(String[] names){
+        
+        pNames = names;
+        
+    }
+    
+    public String[] playGame(){
+        
+        System.out.printf("Hello %s and %s", pNames[0],pNames[0]);
+        
+        //play the wordGame
+        //return the scores
+        return new String[2];
+        
+    }
+}
