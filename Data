@@ -1,0 +1,126 @@
+package wordgame3;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Mark
+ */
+public class Data {
+
+    String[][] userInfo;
+    int numberOfRecords = 0;
+
+    public Data() throws FileNotFoundException {
+        
+        getInfoFromFile();
+        
+        
+    }
+
+    private void getInfoFromFile() throws FileNotFoundException {
+        //read in your userInfo file
+        //Scanner scan = new Scanner(System.in);
+        ArrayList<String> userInfo = new ArrayList<>();
+        File myFile = new File("userInfo.txt");
+        Scanner inputFile = new Scanner(myFile);
+        
+        while (inputFile.hasNext()) {
+            
+            userInfo.add(inputFile.nextLine());
+            
+        }   
+        inputFile.close();
+        int numberofRecords = userInfo.size();
+        String[][] dBase = new String[100][];
+
+        for (int i = 0; i < numberofRecords; i++) {
+            
+            System.out.println(userInfo.get(i));
+            dBase[i] = userInfo.get(i).split(" ");
+            
+        }
+    }
+
+    private void setInfoToFile() {
+        //write insertInfo into the file
+    }
+
+    public String userController() {
+        
+        Scanner SC = new Scanner(System.in);
+        /* 
+        userController method will ask for user name 
+        
+        if it doesn’t exist 
+        in your usersInfo Array 
+        it will ask for a password to create a new user, 
+        
+        else it will ask for your previously saved password to let 
+        you play the game with that username. 
+        
+        If password was correct it 
+        will return the username to gameController. 
+         */
+        int flag = -1;
+        
+        do {
+            System.out.println("Enter a username:");
+            String userName = new String(SC.nextLine());
+            
+            for (int i = 0; i < numberOfRecords; i++) {
+                if (dBase[i][0].equalsIgnoreCase(userName)) {
+                    flag = i;
+                }
+            }
+            if (flag == -1) {
+                
+                System.out.println("Enter a password:");
+                String password = SC.nextLine();
+                
+                dBase[numberOfRecords] = new String[3];
+                dBase[numberOfRecords][0] = userName;
+                dBase[numberOfRecords][1] = password;
+                dBase[numberOfRecords][2] = "0";
+                
+                flag = numberOfRecords;
+                numberOfRecords++;
+                
+            } else {
+                
+                System.out.println("Enter a password:");
+                String password = new String(SC.nextLine());
+                
+                if (password.equals(userInfo[flag][1])) {
+                    
+                    System.out.println("Correct");
+
+                } else {
+                    
+                    System.out.println("False");
+                    
+                }
+            }
+
+        } while (flag == -1);
+
+        return new String("");
+        //new variable pname = whatever then call pname to return the value
+    }
+
+    public void setScores(String[] winner) {
+        //replace new high score with old one
+        setInfoToFile();
+
+    }
+
+    public String[][] getScores() {
+
+        //remove the password colomn from userInfo and return the names and the scores
+        return new String[1][];
+
+    }
+}
