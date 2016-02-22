@@ -1,0 +1,100 @@
+package wordgame3;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Mark
+ */
+public class WordGame3 {
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner input = new Scanner(System.in);
+        int menu;
+
+        do { 
+            //menu for start of application
+            System.out.println("Chose one of the options \n 1. Start Game "
+                    + "\n 2. Show Scores \n 3. Add Word \n 4. Exit");
+
+            //gamer menu input
+            menu = input.nextInt();
+            
+            // Menu options 
+            if (menu == 1) {
+                
+                gameController();
+                
+            } else if (menu == 2) {
+                
+                viewScore();
+                
+            } else if (menu == 3) {
+                
+                addWords();
+                
+            }
+        } while (menu != 4);
+        /*1- Your gameController method for every player will call a 
+        userController method from a “Data” class and will get a name
+        from userController. */
+
+
+
+        
+
+        
+
+        /*5- Your “Data” class will have two methods to set and get highscores 
+        from usersInfo file and userController method. */
+        
+        
+    }
+    private static void gameController() throws FileNotFoundException{
+            /*3- Create a “Game” class and call its playGame method from your 
+        gameController. Your gameController will pass usernames to your 
+        playGame method, and after finishing one round of game, it will 
+        return an array of scores to gameController 
+        (containing two scores for player 1 and player 2).*/
+        
+        
+        /*4- gameController method then will announce the winner and ask 
+        users if they want to continue the game or not if yes, it will 
+        call playGame again else it will send the winner and the total 
+        score of the winner to setScores method of your “Data” class.*/
+        
+               Data myDB = new Data();
+               
+               String[] pNames = new String[2];
+               String[] scores = new String[2];
+               
+               
+               
+               pNames[0] = myDB.userController();
+               pNames[1] = myDB.userController();
+               
+               Game myGame = new Game(pNames);
+               
+               do
+                   
+               {
+                   
+               scores = myGame.playGame();
+               
+               //Announce Winner
+               // Ask do you want to play again
+               //if yes loop
+               
+               }while(1!=1);
+               
+               //if not 
+               myDB.setScores(new String[2]);
+    }
+    private static void addWords()
+    {
+    }
+    private static void viewScore()
+    {
+    }
+}
