@@ -9,34 +9,34 @@ import java.util.Scanner;
  * @author Mark
  */
 public class WordGame3 {
-
+        
+        
     public static void main(String[] args) throws FileNotFoundException, IOException {
         Scanner input = new Scanner(System.in);
-        int menu;
+        int selection;
 
         do { 
             //menu for start of application
-            System.out.println("Chose one of the options \n 1. Start Game "
-                    + "\n 2. Start Game \n 3. Add Word \n 4. Exit");
+            System.out.println("Chose one of the options" + "\n 1. Start Game " + "\n 2. Start Game" + "\n 3. Add Word" + "\n 4. Exit");
 
             //gamer menu input
-            menu = input.nextInt();
+            selection = input.nextInt();
             
             // Menu options 
-            if (menu == 1) {
+            if (selection == 1) {
                 
                 gameController();
                 
-            } else if (menu == 2) {
+            } else if (selection == 2) {
                 
                 gameController();
                 
-            } else if (menu == 3) {
+            } else if (selection == 3) {
                 
                 addWords();
                 
             }
-        } while (menu != 4);
+        } while (selection != 4);
         //1- Your gameController method for every player will call a 
         //userController method from a “Data” class and will get a name
         //from userController. 
@@ -65,6 +65,11 @@ public class WordGame3 {
         //call playGame again else it will send the winner and the total 
         //score of the winner to setScores method of your “Data” class.
         
+               
+               String nextRound;
+               Scanner scan = new Scanner(System.in);
+               
+               
                Data myDB = new Data();
                
                String[] pNames = new String[2];
@@ -77,20 +82,31 @@ public class WordGame3 {
                
                Game myGame = new Game(pNames);
                
-               do
-                   
+               do   
                {
                    
                scores = myGame.playGame();
                
                //Announce Winner
+               //if no save the winner in score tables
+//                if (scores[0] > scores[1]) {
+//                    System.out.println(pNames[0] + " wins");
+//                //outputfile.println(pNames[0] + " wins");
+//                } else {
+//                    System.out.println(pNames[1] + " wins");
+//                //outputfile.println(pNames[1] + " wins");
+//                }
+               
                // Ask do you want to play again
+               System.out.println("Do you want another round?\t"); //ask them to see if they want another round
+               nextRound = new String(scan.next());
                //if yes loop
                
-               }while(1!=1);
+               }while (nextRound.charAt(0) == 'y'); //if yes go to a new word
                
                //if not 
                myDB.setScores(new String[2]);
+               
     }
     private static void addWords()
     {
