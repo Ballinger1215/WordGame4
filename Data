@@ -2,134 +2,113 @@ package wordgame3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  *
  * @author Mark
  */
-public class Data {
-
-    //String[][] _userInfo;
-    String[][] _userInfoG;
-    int numberOfRecords;
-
-    public Data() throws FileNotFoundException {
-        getInfoFromFile();
-        setInfoToFile();
+public class Game {
+    
+    String[] score;
+    String[] pNames;
+    
+    public Game(String[] names){
+        
+        pNames = names;
+        
     }
-
-    private void getInfoFromFile() throws FileNotFoundException {
-        //read in your userInfo file
-        //Scanner scan = new Scanner(System.in);
-        ArrayList<String> _userInfo = new ArrayList<>();
-        File myFile = new File("userInfo.txt");
-        Scanner inputFile = new Scanner(myFile);
-        //load all your data from text file
-        while (inputFile.hasNext()) {
-            
-            _userInfo.add(inputFile.nextLine());
-
-        }   
-        inputFile.close();
+    
+    public String[] playGame() throws FileNotFoundException{
         
-        numberOfRecords = _userInfo.size();
-        
-        //String[][] dBase = new String[100][];
-        _userInfoG = new String[100][];
-        
-        //put the userinfo into a gloabl array
-        for (int i = 0; i < numberOfRecords; i++) {
-            
-            System.out.println(_userInfo.get(i));
-            //dBase[i] = userInfo.get(i).split(" ");
-            _userInfoG[i] = _userInfo.get(i).split(" ");
-            
-        }
-    }
-
-    private void setInfoToFile() {
-        //write inserInfo into the file
-    }
-
-    public String userController() {
-        
+        int w = 0;
+        Random rand = new Random();
         Scanner scan = new Scanner(System.in);
-        //int numberOfRecords = _userInfoG.size();
-         
-        //userController method will ask for user name 
+        boolean correctGuess = false;
+        boolean notRevealed = true;
+        int playerController = -1; // player1 == -1 and player2 == +1
+        String nextRound;
         
-        //if it doesn’t exist 
-        //in your usersInfo Array 
-        //it will ask for a password to create a new user, 
         
-        //else it will ask for your previously saved password to let 
-        //you play the game with that username. 
-        
-        //If password was correct it 
-        //will return the username to gameController. 
-         
-        int flag = -1;
-        
+        //play the wordGame
         do {
-            
-            System.out.println("Enter a username:");
-            String userName = new String(scan.nextLine());
-            
-            for (int i = 0; i < numberOfRecords; i++) {
-                
-                if (_userInfoG[i][0].equalsIgnoreCase(userName)) {
-                    
-                    flag = i;
-                    
-                }
-            }
-            if (flag == -1) {
-                
-                System.out.println("Enter a password:");
-                String password = scan.nextLine();
-                
-                _userInfoG[numberOfRecords] = new String[3];
-                _userInfoG[numberOfRecords][0] = userName;
-                _userInfoG[numberOfRecords][1] = password;
-                _userInfoG[numberOfRecords][2] = "0";
-                
-                flag = numberOfRecords;
-                numberOfRecords++;
-                
-            } else {
-                
-                System.out.println("Enter a password:");
-                String password = new String(scan.nextLine());
-                
-                if (password.equals(_userInfoG[flag][1])) {
-                    
-                    System.out.println("Correct");
-                    
+            System.out.printf("Hello %s and %s", pNames[0],pNames[0]);
 
+            String wordList[] = new String[100]; //to get a random word
+            String word = new String();
+
+            //read a file into an array of strings
+            File myFile = new File("words.txt");
+            Scanner inputFile = new Scanner(myFile);
+            while (inputFile.hasNext() && w < wordList.length) {
+                wordList[w] = inputFile.nextLine();
+                w++;
+            }
+            word = wordList[rand.nextInt(w)]; //select a random number in that array range
+            //System.out.println(word);
+            
+            //select the word from the array
+            char[] guessWord = new char[word.length()];
+            for (int i = 0; i < word.length(); i++) {
+                guessWord[i] = '-';
+            }
+
+            System.out.println(word);
+            System.out.println(guessWord);
+
+            while (notRevealed) {
+                if (correctGuess == false) {
+
+                    playerController++;
+
+                    if (playerController == 2) {
+                        playerController = 0;
+                    }
+                }
+                correctGuess = false;
+
+                System.out.printf("%s, please guess:", pNames[playerController]);
+                String guess = scan.next(); //asking for their guess
+                notRevealed = false;
+
+                for (int i = 0; i < word.length(); i++) { //check to see if it is in the word
+
+                    if (word.charAt(i) == guess.charAt(0)) {
+
+                        guessWord[i] = guess.charAt(0); //replace the dashes with correct letter
+                        correctGuess = true;
+                        score[playerController]++;
+                    }
+                    if (guessWord[i] == '-') {
+                        notRevealed = true;
+                    }
+
+                }
+                System.out.println(guessWord);
+
+            }//ask again (loop)
+            System.out.printf("%s: %d\n%s: %d\n", pNames[0], score[0], pNames[1], score[1]);
+
+            System.out.println("Do you want another round?\t"); //ask them to see if they want another round
+            nextRound = new String(scan.next());
+            
+             //if no save the winner in score tables
+                if (score[0] > score[1]) {
+                    System.out.println(pNames[0] + " wins");
+                //outputfile.println(pNames[0] + " wins");
                 } else {
-                    
-                    System.out.println("False");
-                    
+                    System.out.println(pNames[1] + " wins");
+                //outputfile.println(pNames[1] + " wins");
                 }
-            }
+            outputfile.printf("%s: %d\n%s: %d\n", pNames[0], scores[0], pNames[1], scores[1]);
+            outputfile.close();
+            inputFile.close();
 
-        } while (flag == -1);
-
-        return new String("");
-    }
-
-    public void setScores(String[] winner) {
-        //replace new high score with old one
-        setInfoToFile();
-
-    }
-
-    public String[][] getScores() {
-
-        //remove the password colomn from userInfo and return the names and the scores
-        return new String[1][];
-
+        } while (nextRound.charAt(0) == 'y'); //if yes go to a new word
+        
+        //return the scores
+        return new String[2];
+        
     }
 }
