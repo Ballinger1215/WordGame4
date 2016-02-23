@@ -11,20 +11,20 @@ import java.util.Scanner;
  */
 public class Data {
 
-    String[][] _userInfo;
+    //String[][] _userInfo;
     String[][] _userInfoG;
-    //int numberofRecords = _userInfo.size();
+    int numberOfRecords;
 
     public Data() throws FileNotFoundException {
         getInfoFromFile();
-        
+        setInfoToFile();
     }
 
     private void getInfoFromFile() throws FileNotFoundException {
         //read in your userInfo file
         //Scanner scan = new Scanner(System.in);
         ArrayList<String> _userInfo = new ArrayList<>();
-        File myFile = new File("userInfo.rtf");
+        File myFile = new File("userInfo.txt");
         Scanner inputFile = new Scanner(myFile);
         //load all your data from text file
         while (inputFile.hasNext()) {
@@ -34,12 +34,13 @@ public class Data {
         }   
         inputFile.close();
         
-        int numberofRecords = _userInfo.size();
+        numberOfRecords = _userInfo.size();
         
         //String[][] dBase = new String[100][];
         _userInfoG = new String[100][];
-
-        for (int i = 0; i < numberofRecords; i++) {
+        
+        //put the userinfo into a gloabl array
+        for (int i = 0; i < numberOfRecords; i++) {
             
             System.out.println(_userInfo.get(i));
             //dBase[i] = userInfo.get(i).split(" ");
@@ -55,20 +56,20 @@ public class Data {
     public String userController() {
         
         Scanner scan = new Scanner(System.in);
-        int numberOfRecords = _userInfo.size();
-        /* 
-        userController method will ask for user name 
+        //int numberOfRecords = _userInfoG.size();
+         
+        //userController method will ask for user name 
         
-        if it doesn’t exist 
-        in your usersInfo Array 
-        it will ask for a password to create a new user, 
+        //if it doesn’t exist 
+        //in your usersInfo Array 
+        //it will ask for a password to create a new user, 
         
-        else it will ask for your previously saved password to let 
-        you play the game with that username. 
+        //else it will ask for your previously saved password to let 
+        //you play the game with that username. 
         
-        If password was correct it 
-        will return the username to gameController. 
-         */
+        //If password was correct it 
+        //will return the username to gameController. 
+         
         int flag = -1;
         
         do {
