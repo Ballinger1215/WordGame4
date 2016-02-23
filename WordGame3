@@ -1,6 +1,7 @@
 package wordgame3;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -9,14 +10,14 @@ import java.util.Scanner;
  */
 public class WordGame3 {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         Scanner input = new Scanner(System.in);
         int menu;
 
         do { 
             //menu for start of application
             System.out.println("Chose one of the options \n 1. Start Game "
-                    + "\n 2. Show Scores \n 3. Add Word \n 4. Exit");
+                    + "\n 2. Start Game \n 3. Add Word \n 4. Exit");
 
             //gamer menu input
             menu = input.nextInt();
@@ -28,7 +29,7 @@ public class WordGame3 {
                 
             } else if (menu == 2) {
                 
-                viewScore();
+                gameController();
                 
             } else if (menu == 3) {
                 
@@ -36,9 +37,9 @@ public class WordGame3 {
                 
             }
         } while (menu != 4);
-        /*1- Your gameController method for every player will call a 
-        userController method from a “Data” class and will get a name
-        from userController. */
+        //1- Your gameController method for every player will call a 
+        //userController method from a “Data” class and will get a name
+        //from userController. 
 
 
 
@@ -46,23 +47,23 @@ public class WordGame3 {
 
         
 
-        /*5- Your “Data” class will have two methods to set and get highscores 
-        from usersInfo file and userController method. */
+        //5- Your “Data” class will have two methods to set and get highscores 
+        //from usersInfo file and userController method. 
         
         
     }
-    private static void gameController() throws FileNotFoundException{
-            /*3- Create a “Game” class and call its playGame method from your 
-        gameController. Your gameController will pass usernames to your 
-        playGame method, and after finishing one round of game, it will 
-        return an array of scores to gameController 
-        (containing two scores for player 1 and player 2).*/
+    private static void gameController() throws FileNotFoundException, IOException{
+        //3- Create a “Game” class and call its playGame method from your 
+        //gameController. Your gameController will pass usernames to your 
+        //playGame method, and after finishing one round of game, it will 
+        //return an array of scores to gameController 
+        //(containing two scores for player 1 and player 2).
         
         
-        /*4- gameController method then will announce the winner and ask 
-        users if they want to continue the game or not if yes, it will 
-        call playGame again else it will send the winner and the total 
-        score of the winner to setScores method of your “Data” class.*/
+        //4- gameController method then will announce the winner and ask 
+        //users if they want to continue the game or not if yes, it will 
+        //call playGame again else it will send the winner and the total 
+        //score of the winner to setScores method of your “Data” class.
         
                Data myDB = new Data();
                
