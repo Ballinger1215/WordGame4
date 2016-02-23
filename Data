@@ -11,47 +11,51 @@ import java.util.Scanner;
  */
 public class Data {
 
-    String[][] userInfo;
-    int numberOfRecords = 0;
+    String[][] _userInfo;
+    String[][] _userInfoG;
+    //int numberofRecords = _userInfo.size();
 
     public Data() throws FileNotFoundException {
-        
         getInfoFromFile();
-        
         
     }
 
     private void getInfoFromFile() throws FileNotFoundException {
         //read in your userInfo file
         //Scanner scan = new Scanner(System.in);
-        ArrayList<String> userInfo = new ArrayList<>();
-        File myFile = new File("userInfo.txt");
+        ArrayList<String> _userInfo = new ArrayList<>();
+        File myFile = new File("userInfo.rtf");
         Scanner inputFile = new Scanner(myFile);
-        
+        //load all your data from text file
         while (inputFile.hasNext()) {
             
-            userInfo.add(inputFile.nextLine());
-            
+            _userInfo.add(inputFile.nextLine());
+
         }   
         inputFile.close();
-        int numberofRecords = userInfo.size();
-        String[][] dBase = new String[100][];
+        
+        int numberofRecords = _userInfo.size();
+        
+        //String[][] dBase = new String[100][];
+        _userInfoG = new String[100][];
 
         for (int i = 0; i < numberofRecords; i++) {
             
-            System.out.println(userInfo.get(i));
-            dBase[i] = userInfo.get(i).split(" ");
+            System.out.println(_userInfo.get(i));
+            //dBase[i] = userInfo.get(i).split(" ");
+            _userInfoG[i] = _userInfo.get(i).split(" ");
             
         }
     }
 
     private void setInfoToFile() {
-        //write insertInfo into the file
+        //write inserInfo into the file
     }
 
     public String userController() {
         
-        Scanner SC = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
+        int numberOfRecords = _userInfo.size();
         /* 
         userController method will ask for user name 
         
@@ -68,23 +72,27 @@ public class Data {
         int flag = -1;
         
         do {
+            
             System.out.println("Enter a username:");
-            String userName = new String(SC.nextLine());
+            String userName = new String(scan.nextLine());
             
             for (int i = 0; i < numberOfRecords; i++) {
-                if (dBase[i][0].equalsIgnoreCase(userName)) {
+                
+                if (_userInfoG[i][0].equalsIgnoreCase(userName)) {
+                    
                     flag = i;
+                    
                 }
             }
             if (flag == -1) {
                 
                 System.out.println("Enter a password:");
-                String password = SC.nextLine();
+                String password = scan.nextLine();
                 
-                dBase[numberOfRecords] = new String[3];
-                dBase[numberOfRecords][0] = userName;
-                dBase[numberOfRecords][1] = password;
-                dBase[numberOfRecords][2] = "0";
+                _userInfoG[numberOfRecords] = new String[3];
+                _userInfoG[numberOfRecords][0] = userName;
+                _userInfoG[numberOfRecords][1] = password;
+                _userInfoG[numberOfRecords][2] = "0";
                 
                 flag = numberOfRecords;
                 numberOfRecords++;
@@ -92,11 +100,12 @@ public class Data {
             } else {
                 
                 System.out.println("Enter a password:");
-                String password = new String(SC.nextLine());
+                String password = new String(scan.nextLine());
                 
-                if (password.equals(userInfo[flag][1])) {
+                if (password.equals(_userInfoG[flag][1])) {
                     
                     System.out.println("Correct");
+                    
 
                 } else {
                     
@@ -108,7 +117,6 @@ public class Data {
         } while (flag == -1);
 
         return new String("");
-        //new variable pname = whatever then call pname to return the value
     }
 
     public void setScores(String[] winner) {
