@@ -14,8 +14,9 @@ import java.util.Scanner;
  */
 public class Game {
     
-    String[] score;
+    int[] scores;
     String[] pNames;
+    String[][] _userInfoG;
     
     public Game(String[] names){
         
@@ -28,19 +29,14 @@ public class Game {
         int w = 0;
         Random rand = new Random();
         Scanner scan = new Scanner(System.in);
-        int[] scores = new int[2];
         boolean correctGuess = false;
         boolean notRevealed = true;
         int playerController = -1; // player1 == -1 and player2 == +1
-        String nextRound;
         
-        String filename = "scores.txt";
-        FileWriter fw = new FileWriter(filename, true);
-        PrintWriter outputfile = new PrintWriter(fw);
+
         
-        //play the wordGame
-        do {
-            System.out.printf("Hello %s and %s", pNames[0],pNames[0]);
+            //play the wordGame
+            System.out.printf("Hello %s and %s", pNames[0], pNames[1]);
 
             String wordList[] = new String[100]; //to get a random word
             String word = new String();
@@ -53,7 +49,7 @@ public class Game {
                 w++;
             }
             word = wordList[rand.nextInt(w)]; //select a random number in that array range
-            //System.out.println(word);
+            //System.out.println(word); //test if the word was printing out from the file
             
             //select the word from the array
             char[] guessWord = new char[word.length()];
@@ -95,27 +91,23 @@ public class Game {
                 System.out.println(guessWord);
 
             }//ask again (loop)
-            System.out.printf("%s: %d\n%s: %d\n", pNames[0], scores[0], pNames[1], scores[1]);
-
-            System.out.println("Do you want another round?\t"); //ask them to see if they want another round
-            nextRound = new String(scan.next());
-            
-             //if no save the winner in score tables
-                if (scores[0] > scores[1]) {
-                    System.out.println(pNames[0] + " wins");
-                //outputfile.println(pNames[0] + " wins");
-                } else {
-                    System.out.println(pNames[1] + " wins");
-                //outputfile.println(pNames[1] + " wins");
-                }
-            outputfile.printf("%s: %d\n%s: %d\n", pNames[0], scores[0], pNames[1], scores[1]);
-            outputfile.close();
+//            System.out.printf("%s: %d\n%s: %d\n", pNames[0], scores[0], pNames[1], scores[1]);
+//            
+//                if (scores[0] > scores[1]) {
+//                    System.out.println(pNames[0] + " wins");
+//                //outputfile.println(pNames[0] + " wins");
+//                } else {
+//                    System.out.println(pNames[1] + " wins");
+//                //outputfile.println(pNames[1] + " wins");
+//             
+//            outputfile.printf("%s: %d\n%s: %d\n", pNames[0], scores[0], pNames[1], scores[1]);
+//            outputfile.close();
             inputFile.close();
+            return new String[2];
 
-        } while (nextRound.charAt(0) == 'y'); //if yes go to a new word
+        }
         
         //return the scores
-        return new String[2];
-        
-    }
+    
 }
+   
