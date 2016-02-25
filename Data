@@ -13,6 +13,7 @@ public class Data {
 
     String[][] _userInfoG;
     int numberOfRecords;
+    String[] pNames;
 
     public Data() throws FileNotFoundException {
         getInfoFromFile();
@@ -106,7 +107,9 @@ public class Data {
 
         } while (flag == -1);
 
-        return new String(_userInfoG[i][0]); //will return the username to gameController.
+        return new String(_userInfoG(0)); //will return the username to gameController.
+        //return new String(pNames[0].playGame);
+        //userName.playGame(new String[0]);
     }
 
     public void setScores(String[] winner) {
@@ -122,4 +125,3 @@ public class Data {
 
     }
 }
-
