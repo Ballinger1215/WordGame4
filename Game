@@ -16,7 +16,6 @@ public class Game {
     
     int[] scores;
     String[] pNames;
-    String[][] _userInfoG;
     
     public Game(String[] names){
         
@@ -57,8 +56,8 @@ public class Game {
                 guessWord[i] = '-';
             }
 
-            System.out.println(word);
-            System.out.println(guessWord);
+            System.out.println(word); // prints out word that you are guessing in game for testing
+            System.out.println(guessWord); // changes letter of words to dashes so the user cant see the word
 
             while (notRevealed) {
                 if (correctGuess == false) {
@@ -110,4 +109,3 @@ public class Game {
         //return the scores
     
 }
-   
