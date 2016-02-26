@@ -143,10 +143,10 @@ public class Data {
         
     }
 
-    public void setScores(String[] winner) throws FileNotFoundException {
+    public void setScores(int[] scores) throws FileNotFoundException {
         //replace new high score with old one
-        _userInfoG[indexKeeper[0]][2] = String.valueOf(winner[0]);
-        _userInfoG[indexKeeper[1]][2] = String.valueOf(winner[1]);
+        _userInfoG[indexKeeper[0]][2] = String.valueOf(scores[0]);
+        _userInfoG[indexKeeper[1]][2] = String.valueOf(scores[1]);
         
         setInfoToFile();
 
