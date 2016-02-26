@@ -1,7 +1,10 @@
 package wordgame3;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
@@ -17,7 +20,7 @@ public class WordGame3 {
 
         do { 
             //menu for start of application
-            System.out.println("Chose one of the options" + "\n 1. Start Game " + "\n 2. Start Game" + "\n 3. Add Word" + "\n 4. Exit");
+            System.out.println("Chose one of the options" + "\n 1. Start Game " + "\n 2. Add Word" + "\n 3. View Scores" + "\n 4. Exit");
 
             //gamer menu input
             selection = input.nextInt();
@@ -29,89 +32,128 @@ public class WordGame3 {
                 
             } else if (selection == 2) {
                 
-                gameController();
+                addWords();
                 
             } else if (selection == 3) {
                 
-                addWords();
+                viewScores();
                 
             }
         } while (selection != 4);
-        //1- Your gameController method for every player will call a 
+        //Your gameController method for every player will call a 
         //userController method from a “Data” class and will get a name
         //from userController. 
-
-
-
-        
-
-        
-
-        //5- Your “Data” class will have two methods to set and get highscores 
+        //Your “Data” class will have two methods to set and get highscores 
         //from usersInfo file and userController method. 
-        
-        
     }
     private static void gameController() throws FileNotFoundException, IOException{
-        //3- Create a “Game” class and call its playGame method from your 
+        //Create a “Game” class and call its playGame method from your 
         //gameController. Your gameController will pass usernames to your 
         //playGame method, and after finishing one round of game, it will 
         //return an array of scores to gameController 
         //(containing two scores for player 1 and player 2).
-        
-        
-        //4- gameController method then will announce the winner and ask 
+        //gameController method then will announce the winner and ask 
         //users if they want to continue the game or not if yes, it will 
         //call playGame again else it will send the winner and the total 
         //score of the winner to setScores method of your “Data” class.
-        
-               
                String nextRound;
                Scanner scan = new Scanner(System.in);
                
-               
-               Data myDB = new Data();
-               
                String[] pNames = new String[2];
-               String[] scores = new String[2];
+               int[] scores = new int[2];
                
-               
-               
+               Data myDB = new Data(); // creates user database and connects to the data class
+
                pNames[0] = myDB.userController();
+               scores[0] = myDB.getScores(pNames[0]);
                pNames[1] = myDB.userController();
+               scores[1] = myDB.getScores(pNames[1]);
                
                Game myGame = new Game(pNames);
                
                do   
                {
                    
-               scores = myGame.playGame();
+               int[] gScores = myGame.playGame();
                
-               //Announce Winner
-               //if no save the winner in score tables
-//                if (scores[0] > scores[1]) {
-//                    System.out.println(pNames[0] + " wins");
-//                //outputfile.println(pNames[0] + " wins");
-//                } else {
-//                    System.out.println(pNames[1] + " wins");
-//                //outputfile.println(pNames[1] + " wins");
-//                }
+               scores[0] = gScores[0] + scores[0]; // converts gScores int integers and scores into integers to add together
+               scores[1] = gScores[1] + scores[1];
                
-               // Ask do you want to play again
                System.out.println("Do you want another round?\t"); //ask them to see if they want another round
                nextRound = new String(scan.next());
-               //if yes loop
                
                }while (nextRound.charAt(0) == 'y'); //if yes go to a new word
                
-               //if not 
-               myDB.setScores(new String[2]);
+               myDB.setScores(scores); //return the scores 
                
     }
-    private static void addWords()
+    private static void addWords() throws FileNotFoundException, IOException
     {
+       
+        int input = 0;
+        String word = new String();
+        String answer;
+        String gamewords = "words.txt"; // filename
+        
+        Scanner ip = new Scanner(System.in);
+        Scanner checkWord = new Scanner(System.in);
+        
+        do {
+                System.out.println("Choose one of the options" + "\n 1. Add Word" + "\n 2. Show added words" + "\n 3. exit");
+                input = ip.nextInt();
+                word = (ip.nextLine());
+
+                if (input == 1) {
+
+                 do{
+                        FileWriter fw = new FileWriter(gamewords, true);
+                        PrintWriter outputFile = new PrintWriter(fw);
+
+                        // to add word to the hangman game
+                        System.out.println("Add word to the the Hangman game: ");
+                        word = (ip.nextLine());
+
+                        outputFile.println(word);
+                        outputFile.close();
+
+                        System.out.println("Do you want to add another word to the Game: ");
+                        answer = new String(checkWord.next());
+
+                    }while(answer.charAt(0) == 'y');
+
+                }else if(input == 2) {
+
+                        File file = new File(gamewords);
+                        Scanner inputFile = new Scanner(file);
+
+                        while(inputFile.hasNext()){
+
+                            String line = inputFile.nextLine();
+                            System.out.println(line);
+                        }
+
+                        inputFile.close();
+
+                }
+
+            }while(input != 3); 
     }
-    private static void viewScore()
+    private static void viewScores() throws FileNotFoundException
     {
+        
+                String filename = "userInfo.txt"; // filename
+                
+                File file = new File(filename); // open the file
+                Scanner inputFile = new Scanner(file);
+                
+                while(inputFile.hasNext()){
+                
+                String line = inputFile.nextLine();
+                System.out.println(line);
+                
+                }
+                
+                inputFile.close(); // close the file
+                
     }
 }
